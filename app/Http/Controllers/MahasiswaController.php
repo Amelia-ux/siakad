@@ -21,6 +21,14 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index', compact('mahasiswa'));
         with('i', (request()->input('page', 1) - 1) * 5);
     }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $mahasiswa = Mahasiswa::where('nama', 'like', "%" . $keyword . "%")->simplePaginate(3);
+        return view('mahasiswa.index', compact('mahasiswa'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
     public function create()
     {
         return view('mahasiswa.create');
