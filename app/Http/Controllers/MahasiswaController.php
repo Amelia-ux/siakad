@@ -19,7 +19,7 @@ class MahasiswaController extends Controller
         //fungsi eloquent menampilkan data menggunakan pagination
         $mahasiswa = Mahasiswa::with('kelas')->get();
         $paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(3);
-        return view('mahasiswa.index', ['mahasiswa' => $mahasiswa, 'paginate'=>$paginate]);
+        return view('mahasiswa.index', ['mahasiswa' => $mahasiswa, 'paginate' => $paginate]);
         
         /*$mahasiswa = $mahasiswa = DB::table('mahasiswa')->paginate(3); // Mengambil semua isi tabel
         $posts = Mahasiswa::orderBy('Nim', 'desc')->paginate(5);
@@ -30,13 +30,12 @@ class MahasiswaController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->search;
-        $mahasiswa = Mahasiswa::where('nama', 'like', "%" . $keyword . "%")->paginate(3);
-            return view('mahasiswa.index', compact('mahasiswa'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $paginate = Mahasiswa::where('nama', 'like', "%" . $keyword . "%")->paginate(3);
+            return view('mahasiswa.index', compact('paginate'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function create()
     {
-        
         $kelas = Kelas::all();
         return view('mahasiswa.create', ['kelas' => $kelas]);
     }
@@ -77,16 +76,16 @@ class MahasiswaController extends Controller
     public function show($Nim)
     {
         //menampilkan detail data dengan menemukan/berdasarkan Nim Mahasiswa
-        $mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
-            return view('mahasiswa.detail', ['Mahasiswa' => $mahasiswa]);
+        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
+            return view('mahasiswa.detail', ['Mahasiswa' => $Mahasiswa]);
     }
 
     public function edit($Nim)
     {
         //menampilkan detail data dengan menemukan berdasarkan Nim Mahasiswa untuk diedit
-        $mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
+        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
         $kelas = Kelas::all();
-            return view('mahasiswa.edit', compact('mahasiswa', 'kelas'));
+            return view('mahasiswa.edit', compact('Mahasiswa', 'kelas'));
     }
 
     public function update(Request $request, $Nim)
@@ -127,5 +126,11 @@ class MahasiswaController extends Controller
     //fungsi eloquent untuk menghapus data
         Mahasiswa::find($Nim)->delete();
             return redirect()->route('mahasiswa.index')-> with('success', 'Mahasiswa Berhasil Dihapus');
+    }
+
+    public function nilai($Nim)
+    {
+        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
+            return view('mahasiswa.nilai', ['Mahasiswa' => $Mahasiswa]);
     }
 };
