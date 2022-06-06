@@ -3,9 +3,13 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <div class="pull-left mt-2">
-                <h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
-                <h3>KARTU HASIL STUDI (KHS)</h3>
+            <div class="justify-content-center align-items-center">
+                <div class="d-flex justify-content-center mt-2">
+                    <h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
+                </div>
+                <div class="d-flex justify-content-center my-4">
+                    <h1 class="text-center">KARTU HASIL STUDI (KHS)</h1>
+                </div>
             </div>
         </div>
         <div class="text-left">
@@ -21,14 +25,15 @@
                 <th>Semester</th>
                 <th>Nilai</th>
             </tr>
-            @foreach ($Mahasiswa as $mhs)
+            @foreach ($matkul as $mk)
                 <tr>
-                    <td>{{ $mhs ->nama_matkul }}</td>
-                    <td>{{ $mhs ->sks }}</td>
-                    <td>{{ $mhs ->semester }}</td>
-                    <td>{{ $mhs ->pivot->nilai }}</td>
+                    <td>{{ $mk->matakuliah->nama_matkul }}</td>
+                    <td>{{ $mk->matakuliah->sks }}</td>
+                    <td>{{ $mk->matakuliah->semester }}</td>
+                    <td>{{ $mk->nilai }}</td>
                 </tr>
             @endforeach
         </table>
+        <a class="btn btn-success" href="{{ route('mahasiswa.index') }}">Kembali</a>
     </div>
 @endsection

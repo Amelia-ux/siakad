@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Mahasiswa;
+use App\Models\Mahasiswa_MataKuliah;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
+use App\Models\Matakuliah;
 
 class MahasiswaController extends Controller
 {
@@ -121,16 +124,17 @@ class MahasiswaController extends Controller
                 ->with('success', 'Mahasiswa Berhasil Diupdate');
     }
 
-    public function destroy( $Nim)
+    public function destroy($Nim)
     {
     //fungsi eloquent untuk menghapus data
         Mahasiswa::find($Nim)->delete();
             return redirect()->route('mahasiswa.index')-> with('success', 'Mahasiswa Berhasil Dihapus');
     }
 
-    public function nilai($Nim)
+    public function nilai($id)
     {
-        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
-            return view('mahasiswa.nilai', ['Mahasiswa' => $Mahasiswa]);
+        $Mahasiswa = Mahasiswa::with('kelas')->where('id_mahasiswa', $id)->first();
+        $matkul = Mahasiswa_MataKuliah::with('matakuliah')->where('mahasiswa_id', $id)->get();
+            return view('mahasiswa.nilai', compact('Mahasiswa', 'matkul'));
     }
 };
