@@ -17,7 +17,11 @@
             <p><b>Nama : </b>{{ $Mahasiswa->nim }}</p>
             <p><b>Nama : </b>{{ $Mahasiswa->kelas->nama_kelas }}</p>
         </div>
-
+        <div class="col d-flex justify-content-end">
+            <div style="margin:0px 0px 0px 70px;">
+                <a class="btn btn-success" href="{{ route('cetak_pdf', $Mahasiswa->id_mahasiswa) }}">Cetak KHS</a>
+            </div>
+        </div>
         <table class="table table-bordered">
             <tr>
                 <th>Mata Kuliah</th>
