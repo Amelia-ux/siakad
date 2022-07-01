@@ -14,8 +14,8 @@
         </div>
         <div class="text-left">
             <p><b>Nama : </b>{{ $Mahasiswa->nama }}</p>
-            <p><b>Nama : </b>{{ $Mahasiswa->nim }}</p>
-            <p><b>Nama : </b>{{ $Mahasiswa->kelas->nama_kelas }}</p>
+            <p><b>Nim : </b>{{ $Mahasiswa->nim }}</p>
+            <p><b>Kelas : </b>{{ $Mahasiswa->kelas->nama_kelas }}</p>
         </div>
         <div class="col d-flex justify-content-end">
             <div style="margin:0px 0px 0px 70px;">
